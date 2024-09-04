@@ -1,0 +1,19 @@
+def inverter_string(s):
+    caracteres = list(s)
+
+    inicio = 0
+    fim = len(caracteres) - 1
+
+    while inicio < fim:
+        caracteres[inicio], caracteres[fim] = caracteres[fim], caracteres[inicio]
+
+        inicio += 1
+        fim -= 1
+
+    return ''.join(caracteres)
+
+
+string = "ola"
+
+string_invertida = inverter_string(string)
+print("String invertida:", string_invertida)
