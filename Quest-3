@@ -1,0 +1,37 @@
+import json
+
+
+def calcular_faturamento(file_path):
+    with open(file_path, 'r') as file:
+        dados = json.load(file)
+
+    faturamentos = [item['valor']
+                    for item in dados if 'valor' in item and item['valor'] > 0]
+
+    if not faturamentos:
+        return "Não há dados de faturamento válidos."
+
+    menor_faturamento = min(faturamentos)
+    maior_faturamento = max(faturamentos)
+
+    media_mensal = sum(faturamentos) / len(faturamentos)
+
+    dias_acima_media = sum(1 for valor in faturamentos if valor > media_mensal)
+
+    return {
+        "menor_faturamento": menor_faturamento,
+        "maior_faturamento": maior_faturamento,
+        "dias_acima_media": dias_acima_media
+    }
+
+
+file_path = 'dados.json'
+
+try:
+    resultados = calcular_faturamento(file_path)
+    print("Menor valor de faturamento:", resultados['menor_faturamento'])
+    print("Maior valor de faturamento:", resultados['maior_faturamento'])
+    print("Número de dias acima da média mensal:",
+          resultados['dias_acima_media'])
+except Exception as e:
+    print(f"Erro: {e}")
